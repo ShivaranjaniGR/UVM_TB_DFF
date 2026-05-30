@@ -16,7 +16,7 @@ A UVM-based testbench was created to verify the clocked behavior of the D Flip-F
 - Simulation tool: Add your simulator name here
 
 ## Theory
-### UVM Testbench Architechture
+###  Testbench Architechture
 <img width="567" height="655" alt="image" src="https://github.com/user-attachments/assets/cb750515-b6f7-4e43-bf2e-704387d80df8" />
 
 <img width="592" height="526" alt="image" src="https://github.com/user-attachments/assets/28dd1be7-12e8-40e6-a7df-35ff84e9fd7c" />
@@ -42,6 +42,8 @@ Monitor -> takes results from DUT and sends it to scoreboard.
 
 #### *Scoreboard -> decides if test is pass or fail
 
+## UVM ARCHITECHTURE
+<img width="908" height="641" alt="image" src="https://github.com/user-attachments/assets/97e5eea2-3ecb-403e-b852-e9461652e659" />
 
 
 ## Design Under Test
@@ -50,7 +52,9 @@ The D Flip-Flop captures the input `d` on the active clock edge and updates the 
 
 Basic behavior:
 
-```verilog
-always @(posedge clk) begin
-  q <= d;
-end
+
+## CLOCK GENERATION
+
+## CLOCK GENERATION
+<img width="562" height="337" alt="image" src="https://github.com/user-attachments/assets/87ca261e-0528-4325-afb1-a9710df0d383" />
+
