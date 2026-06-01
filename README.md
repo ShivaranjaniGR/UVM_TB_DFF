@@ -57,13 +57,26 @@ all phases are functions. starting from test and downwards.
 
  # connect phase
  Transaction level modelling (TLM) -> Instead of bit by bit communication, we communicatie  using complete packets/transactions. 
-Inside Agent -> Connection between sequencer to driver inside an agent,  is a regular TLM port.
+## Inside Agent -> Connection between sequencer to driver inside an agent,  is a regular TLM port.
 seq_item_port of driver(receiving) connected to seq_item_export of sequencer (sending)
 <img width="605" height="130" alt="image" src="https://github.com/user-attachments/assets/b7958ddd-b124-49a2-9aeb-6cc6a6558d41" />
-Inside Environment -> Connection between Monitor (inside agent) to scoreboard is a TLM analysis port.
-item_colleced_port of monitor (inside agent) is connected to item_collected_export of scoreboard.
+## Inside Environment -> Connection between Monitor (inside agent) to scoreboard is a TLM analysis port.
+item_collected_port (recieve) of monitor (inside agent) is connected to item_collected_export (sender) of scoreboard.
 
 therefore Agent and Environment have connect phases.
+
+# run phase 
+set interface  in uvm_config_db  in top module in order to access interface in driver and monitor.
+<img width="533" height="67" alt="image" src="https://github.com/user-attachments/assets/70a63d4b-411e-4957-8603-9c937c758d3e" />
+to access in driver / monitor -> get method
+<img width="715" height="68" alt="image" src="https://github.com/user-attachments/assets/a70be34e-dc12-41de-909a-4f383a134a60" />
+
+in driver and monitor, interface is virtual.
+
+
+
+
+
 ## Design Under Test
 
 The D Flip-Flop captures the input `d` on the active clock edge and updates the output `q`.
