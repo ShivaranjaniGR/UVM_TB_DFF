@@ -16,6 +16,8 @@ A UVM-based testbench was created to verify the clocked behavior of the D Flip-F
 - Simulation tool: Add your simulator name here
 
 ## Theory
+
+
 ###  Testbench Architechture
 <img width="567" height="655" alt="image" src="https://github.com/user-attachments/assets/cb750515-b6f7-4e43-bf2e-704387d80df8" />
 
@@ -42,10 +44,22 @@ Monitor -> takes results from DUT and sends it to scoreboard.
 
 #### *Scoreboard -> decides if test is pass or fail
 
-## UVM ARCHITECHTURE
+# UVM ARCHITECHTURE
 <img width="908" height="641" alt="image" src="https://github.com/user-attachments/assets/97e5eea2-3ecb-403e-b852-e9461652e659" />
+ Sequence item and Sequence -> UVM objects (as they are dynamic in nature. destoryed at end of simulation). NO phases.
+ rest all -> UVM Components. Are present during and after simulation time. They have UVM Phases.
+all phases are functions. starting from test and downwards.
+ # build phase 
+ we instatiate and then build all the lower components for each UVM component.
+ 2 ways to do this -> type_id:: create method and new() method. We use type_id:create() method
+ if a component has no sub modules, it need not instantiate anything in build phase separately.
+ <img width="910" height="555" alt="image" src="https://github.com/user-attachments/assets/5bd7f602-ab83-49d1-a262-c5e2bc7521cb" />
 
-
+ # connect phase
+ Transaction level modelling (TLM) -> Instead of bit by bit communication, we communicatie  using complete packets/transactions. 
+Connection between sequencer to driver inside an agent,  is a regular TLM port.
+Connection between Monitor to scoreboard inside environment is a TLM analysis port.
+ 
 ## Design Under Test
 
 The D Flip-Flop captures the input `d` on the active clock edge and updates the output `q`.
