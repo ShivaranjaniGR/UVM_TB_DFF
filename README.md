@@ -56,20 +56,36 @@ all phases are functions. starting from test and downwards.
  <img width="910" height="555" alt="image" src="https://github.com/user-attachments/assets/5bd7f602-ab83-49d1-a262-c5e2bc7521cb" />
 
 we set interface  in uvm_config_db  in top module in order to access interface in driver and monitor.
+if driver doesnt recieve transactions through interface, throw a uvm_fatal message. 
+
 <img width="533" height="67" alt="image" src="https://github.com/user-attachments/assets/70a63d4b-411e-4957-8603-9c937c758d3e" />
+
 to access in driver / monitor -> get method
+
 <img width="715" height="68" alt="image" src="https://github.com/user-attachments/assets/a70be34e-dc12-41de-909a-4f383a134a60" />
+
 in driver and monitor, interface is virtual.
 
  # connect phase
  Transaction level modelling (TLM) -> Instead of bit by bit communication, we communicatie  using complete packets/transactions. 
 ## Inside Agent -> Connection between sequencer to driver inside an agent,  is a regular TLM port.
 seq_item_port of driver(receiving) connected to seq_item_export of sequencer (sending)
+
 <img width="605" height="130" alt="image" src="https://github.com/user-attachments/assets/b7958ddd-b124-49a2-9aeb-6cc6a6558d41" />
+
 ## Inside Environment -> Connection between Monitor (inside agent) to scoreboard is a TLM analysis port.
+In driver we instatiate the analysis port in monitor. we connect the uvm_analysis_port further to the item_collected_port.
+In scoreboard, we instatiate a new  item_collected_export using uvm_analysis_imp and new method.
+these 2 item_collected_ports are connected in the environment.
+
+<img width="602" height="98" alt="image" src="https://github.com/user-attachments/assets/24718cfb-2380-447a-96c5-45681dc5d7c1" />
+
 
 # end of elaboration phase ->
 gives the uvm hierarchy. we can print the uvm hierarchy in log.
+fig. UVM tree at end of elabortion phase
+<img width="671" height="842" alt="image" src="https://github.com/user-attachments/assets/3ff53c14-7373-420e-a80b-2971d8ad8cb7" />
+
 
 # run phase (its a task)
 its the heart of simulation. All transaction flow happens in run phase. it takes up majority of the time.
@@ -90,6 +106,7 @@ phase.drop_objection(this);
 we dont need a run phase in environment.
 
 ## in Driver ->
+
 <img width="476" height="277" alt="image" src="https://github.com/user-attachments/assets/d0b588e2-2435-41e4-be11-4c4ffcc2fbc1" />
 
 recieve transaction using get_next_item in the seq_item_port of driver.
@@ -100,6 +117,7 @@ driver recieves the transaction and drives the interface's d, q and rst ports.
 then send a seq_item_port.item_done() message
 
 <img width="1086" height="797" alt="image" src="https://github.com/user-attachments/assets/50384196-7da7-4a3c-a3d4-28c38d4aed0b" />
+
 fig. Sequence - Sequencer - Driver Communication during run phase.
 
 
@@ -110,12 +128,28 @@ Then we request a sequence from sequencer using wait_for_grant().
 once sequence recieve grant, we randomise the transactions and sends transaction to sequencer.\
 then we wait for item_done() from driver through sequencer to send the next random transaction.
 we can set the repeat number to 5 for example to do this process 5 times.
+
 <img width="352" height="208" alt="image" src="https://github.com/user-attachments/assets/04e8e265-caae-4ecb-a743-11b3efde550c" />
 
+## in monitor ->
+at posedge of clock, we sample the outputs from the interface and combine them into a new transaction. 
+
+<img width="402" height="193" alt="image" src="https://github.com/user-attachments/assets/faaa1ebb-eb93-4abf-aabe-0c2a8e501e56" />
+
+## in scoreboard ->
+put all recieved transactions in a queue (tx_q) using a write function.
+
+<img width="662" height="107" alt="image" src="https://github.com/user-attachments/assets/00dc89cf-8fb2-43d3-8238-7107158a8e2e" />
+
+we pop the one transaction at a time from scoreboard.
+if D = Q, we pass the test,
+else test is failed. 
 
 
 
-
+# Constraints
+we have kept reset at 0 at all times as a constraint.
+D is randommised.
 
 
 
@@ -123,11 +157,19 @@ we can set the repeat number to 5 for example to do this process 5 times.
 
 The D Flip-Flop captures the input `d` on the active clock edge and updates the output `q`.
 
-Basic behavior:
 
 
-## CLOCK GENERATION
+# OUTPUT OF THE UVM TESTBENCH ON D FLIPFLOP ->
 
-## CLOCK GENERATION
-<img width="562" height="337" alt="image" src="https://github.com/user-attachments/assets/87ca261e-0528-4325-afb1-a9710df0d383" />
+fig. UVM Tree at end of elaboration phase
+<img width="705" height="845" alt="image" src="https://github.com/user-attachments/assets/df7cb15d-021d-4720-a326-7010b44087bd" />
+
+-------
+fig. clock generation
+<img width="735" height="800" alt="image" src="https://github.com/user-attachments/assets/8049f463-08d7-4166-85b5-5e777e71da4c" />
+
+------
+fig. UVM report summary
+<img width="730" height="647" alt="image" src="https://github.com/user-attachments/assets/786f26c7-8eaf-4468-b120-8e711cb7e66d" />
+
 
