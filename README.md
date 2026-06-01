@@ -50,6 +50,8 @@ The UVM testbench was developed and simulated using EDA Playground with the foll
 | Compile Options | `-timescale=1ns/1ns +vcs+flush+all` |
 | Platform | EDA Playground |
 
+<img width="1918" height="1135" alt="image" src="https://github.com/user-attachments/assets/66cfaffa-2f42-47d4-943c-c036c315e446" />
+
 ---
 
 ## UVM Testbench Architecture
