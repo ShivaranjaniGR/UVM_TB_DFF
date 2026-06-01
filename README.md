@@ -90,6 +90,29 @@ phase.drop_objection(this);
 we dont need a run phase in environment.
 
 ## in Driver ->
+<img width="476" height="277" alt="image" src="https://github.com/user-attachments/assets/d0b588e2-2435-41e4-be11-4c4ffcc2fbc1" />
+
+recieve transaction using get_next_item in the seq_item_port of driver.
+then drive the transaction using a custom defined tast called drive().
+transaction consists of rst, d and q.
+rst d and q of interface is driven by rst d and q of transaction in the function. 
+driver recieves the transaction and drives the interface's d, q and rst ports.
+then send a seq_item_port.item_done() message
+
+<img width="1086" height="797" alt="image" src="https://github.com/user-attachments/assets/50384196-7da7-4a3c-a3d4-28c38d4aed0b" />
+fig. Sequence - Sequencer - Driver Communication during run phase.
+
+
+## in Sequence ->
+now sequence is a object, so no phases. however, we do create a task body. this is to implement the functionalities within sequence.
+we create transaction using type id method.
+Then we request a sequence from sequencer using wait_for_grant().
+once sequence recieve grant, we randomise the transactions and sends transaction to sequencer.\
+then we wait for item_done() from driver through sequencer to send the next random transaction.
+we can set the repeat number to 5 for example to do this process 5 times.
+<img width="352" height="208" alt="image" src="https://github.com/user-attachments/assets/04e8e265-caae-4ecb-a743-11b3efde550c" />
+
+
 
 
 
