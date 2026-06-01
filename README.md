@@ -57,9 +57,13 @@ all phases are functions. starting from test and downwards.
 
  # connect phase
  Transaction level modelling (TLM) -> Instead of bit by bit communication, we communicatie  using complete packets/transactions. 
-Connection between sequencer to driver inside an agent,  is a regular TLM port.
-Connection between Monitor to scoreboard inside environment is a TLM analysis port.
- 
+Inside Agent -> Connection between sequencer to driver inside an agent,  is a regular TLM port.
+seq_item_port of driver(receiving) connected to seq_item_export of sequencer (sending)
+<img width="605" height="130" alt="image" src="https://github.com/user-attachments/assets/b7958ddd-b124-49a2-9aeb-6cc6a6558d41" />
+Inside Environment -> Connection between Monitor (inside agent) to scoreboard is a TLM analysis port.
+item_colleced_port of monitor (inside agent) is connected to item_collected_export of scoreboard.
+
+therefore Agent and Environment have connect phases.
 ## Design Under Test
 
 The D Flip-Flop captures the input `d` on the active clock edge and updates the output `q`.
